@@ -74,8 +74,13 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
 .wire-grid{padding:0 clamp(20px,6vw,80px);margin:clamp(30px,5vh,60px) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,24px)}
 .wire-grid img{width:100%;display:block;border-radius:6px;border:1px solid var(--border)}
 @media(max-width:600px){.wire-grid{grid-template-columns:1fr}}
-.logo-display{padding:clamp(50px,8vh,90px) clamp(20px,6vw,80px);background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.logo-display{padding:clamp(50px,8vh,90px) clamp(20px,6vw,80px);background:#ede9e0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center}
 .logo-display img{max-width:clamp(220px,40vw,480px);width:100%;display:block}
+/* entry video — phone aspect, centered, rounded */
+.entry-video-wrap{padding:0 clamp(20px,6vw,80px);margin:clamp(30px,5vh,60px) 0;display:flex;justify-content:center}
+.entry-video-inner{position:relative;width:clamp(220px,28vw,320px);border-radius:28px;overflow:hidden;background:var(--surface);border:1px solid var(--border);box-shadow:0 40px 80px rgba(0,0,0,.5)}
+.entry-video-inner video{width:100%;display:block;aspect-ratio:9/19.5;object-fit:cover}
+@media(max-width:640px){.entry-video-wrap{padding:0 16px}.entry-video-inner{width:clamp(180px,60vw,260px)}}
 .cells{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:clamp(30px,5vh,50px)}
 .cell{background:var(--bg);padding:clamp(22px,3.5vh,38px) clamp(20px,3vw,34px);transition:background .25s}
 .cell:hover{background:var(--surface)}
@@ -249,10 +254,14 @@ footer{padding:clamp(20px,3.5vh,30px) clamp(20px,6vw,80px);border-top:1px solid 
   </div>
 </div>
 
-<div class="img-contained rev">
-  <img src="page2_8.png" alt="Forge brand identity and entry screen"/>
+<div class="entry-video-wrap rev">
+  <div class="entry-video-inner">
+    <video autoplay muted loop playsinline poster="page2_8.png">
+      <source src="page2_9.mp4" type="video/mp4"/>
+    </video>
+  </div>
 </div>
-<div class="caption rev">Brand identity · logo system and entry screen</div>
+<div class="caption rev">Opening animation · first-launch experience</div>
 
 <hr class="div"/>
 
