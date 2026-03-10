@@ -75,8 +75,9 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
 .img-contained img{width:100%;display:block;border-radius:4px}
 .caption{padding:0 clamp(20px,6vw,80px);margin-top:clamp(8px,1.2vh,14px);margin-bottom:0;font-size:clamp(9px,.9vw,10.5px);letter-spacing:.2em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px}
 .caption::before{content:'';width:20px;height:1px;background:var(--border);flex-shrink:0}
+.caption+.pull-quote{margin-top:clamp(50px,8vh,90px)}
 .screen-grid{padding:0 clamp(20px,6vw,80px);margin:clamp(30px,5vh,60px) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,24px)}
-.screen-grid img,.screen-grid video{width:100%;display:block;border-radius:10px;aspect-ratio:9/19.5;object-fit:cover;object-position:top}
+.screen-grid img,.screen-grid video{width:100%;display:block;border-radius:10px;height:auto}
 .wire-grid{padding:0 clamp(20px,6vw,80px);margin:clamp(30px,5vh,60px) 0;display:grid;grid-template-columns:1fr 1.6fr;gap:clamp(12px,2vw,24px)}
 .wire-grid img{width:100%;display:block;border-radius:6px;border:1px solid var(--border);height:clamp(340px,50vw,620px);object-fit:cover;object-position:top center}
 @media(max-width:600px){.wire-grid{grid-template-columns:1fr}.wire-grid img{height:clamp(260px,70vw,420px)}}
@@ -286,10 +287,10 @@ footer{padding:clamp(20px,3.5vh,30px) clamp(20px,6vw,80px);border-top:1px solid 
 
 <div class="screen-grid rev">
   <img src="page2_5.png" alt="Forge home feed"/>
-  <img src="page2_6.png" alt="Forge marketplace"/>
-  <img src="page2_7.png" alt="Forge notifications"/>
+  <img src="page2_6.png" alt="Forge trending feed"/>
+  <img src="page2_7.png" alt="Forge following feed"/>
 </div>
-<div class="caption rev">Product structure · Home Feed, Marketplace, Notifications</div>
+<div class="caption rev">Product structure · Home, Trending, Following</div>
 
 <hr class="div"/>
 
@@ -348,11 +349,11 @@ footer{padding:clamp(20px,3.5vh,30px) clamp(20px,6vw,80px);border-top:1px solid 
 </div>
 
 <div class="screen-grid rev">
-  <img src="page2_13.png" alt="Forge home feed exploration"/>
+  <img src="page2_5.png" alt="Forge home feed exploration"/>
   <img src="page2_14.png" alt="Forge marketplace view"/>
   <img src="page2_15.png" alt="Forge search and filters"/>
 </div>
-<div class="caption rev">Discovery · feed exploration, marketplace, search and filters</div>
+<div class="caption rev">Discovery · home feed, marketplace, search and filters</div>
 
 <hr class="div"/>
 
