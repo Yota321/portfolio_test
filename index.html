@@ -452,14 +452,13 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
   /* hero title row: text stack left, photo right */
   .hero-title-row{
     display:flex;
-    align-items:flex-end;
+    align-items:stretch;
     gap:8px;
     margin-bottom:clamp(10px,1.5vh,18px);
   }
   .hero-title-stack{
     flex:1;
     min-width:0;
-    line-height:.88;
   }
   .hero-title-line{
     font-family:'Bebas Neue',sans-serif;
@@ -474,12 +473,11 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
     color:transparent;
   }
   .hero-title-photo{
-    display:block;
+    display:flex;
     width:clamp(100px,28vw,130px);
     flex-shrink:0;
-    align-self:flex-end;
   }
-  .hero-title-photo img,.hero-title-photo .hero-img{width:100%;aspect-ratio:2/3;object-fit:cover;object-position:center top;border-radius:8px;display:block;filter:grayscale(15%)}
+  .hero-title-photo img,.hero-title-photo .hero-img{width:100%;height:100%;object-fit:cover;object-position:center 15%;border-radius:8px;display:block;filter:grayscale(15%)}
   .hero-title-photo .photo-placeholder{width:100%;aspect-ratio:3/4;border-radius:8px}
 }
 
