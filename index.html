@@ -447,9 +447,9 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
   .hero-cta{justify-content:flex-start}
   .stat{justify-content:flex-start;text-align:left}
   .pill{font-size:9px}
-  .hero-title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:clamp(10px,1.5vh,18px)}
-  .hero-title{margin-bottom:0;flex:1;white-space:normal}
-  .hero-title-photo{width:clamp(90px,28vw,130px);flex-shrink:0;align-self:flex-end;margin-bottom:4px}
+  .hero-title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:clamp(10px,1.5vh,18px)}
+  .hero-title{margin-bottom:0;flex:1;min-width:0;white-space:normal;font-size:clamp(52px,18vw,80px);line-height:.86}
+  .hero-title-photo{display:block;width:clamp(85px,25vw,120px);flex-shrink:0;align-self:flex-end;margin-bottom:4px}
   .hero-title-photo img,.hero-title-photo .hero-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 10%;border-radius:8px;display:block;filter:grayscale(15%)}
   .hero-title-photo .photo-placeholder{width:100%;aspect-ratio:3/4;border-radius:8px}
 }
@@ -699,6 +699,68 @@ footer{
 .f-links a{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.18);text-decoration:none;transition:color .2s}
 .f-links a:hover{color:rgba(255,255,255,.45)}
 </style>
+
+<!-- Canonical -->
+<link rel="canonical" href="https://sayanahamed.online/"/>
+
+<!-- Theme color (mobile browser chrome) -->
+<meta name="theme-color" content="#0a0a0a"/>
+
+<!-- Preload hero image (above the fold) -->
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/Yota321/portfolio_2026/main/profile.jpg"/>
+
+<!-- Structured Data: Person + ProfilePage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://sayanahamed.online/#person",
+      "name": "Golam Sayon Ahamed",
+      "alternateName": "G.S. Ahamed",
+      "url": "https://sayanahamed.online/",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://raw.githubusercontent.com/Yota321/portfolio_2026/main/profile.jpg",
+        "contentUrl": "https://raw.githubusercontent.com/Yota321/portfolio_2026/main/profile.jpg"
+      },
+      "jobTitle": "Brand & UI Designer",
+      "description": "Brand & UI Designer focused on digital systems, user psychology, and clear visual communication. Third-year BVA student at Idea Worldwide College, Bangalore.",
+      "knowsAbout": ["Brand Design", "UI/UX Design", "Visual Systems", "Web Design", "User Psychology", "Figma", "Adobe Illustrator", "Adobe Photoshop"],
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Idea Worldwide College",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bangalore",
+          "addressCountry": "IN"
+        }
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bangalore",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://in.linkedin.com/in/golam-sayon-ahamed-568913253",
+        "https://www.behance.net/sayanbox",
+        "https://github.com/Yota321"
+      ],
+      "email": "sayanahamed06@gmail.com"
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://sayanahamed.online/#profilepage",
+      "url": "https://sayanahamed.online/",
+      "name": "Golam Sayon Ahamed — Brand & UI Designer Portfolio",
+      "description": "Portfolio of Golam Sayon Ahamed, a Brand & UI Designer focused on digital systems, user psychology, and clear visual communication.",
+      "mainEntity": { "@id": "https://sayanahamed.online/#person" },
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -765,7 +827,7 @@ footer{
       </div>
       <p class="hero-eyebrow rev" style="transition-delay:.1s">Brand &amp; UI Designer</p>
       <div class="hero-title-row">
-        <h1 class="hero-title rev" style="transition-delay:.15s"><span class="t-fill">PORT</span><span class="t-stroke">FOLIO</span></h1>
+        <h1 class="hero-title rev" style="transition-delay:.15s"><span class="t-fill">PORT</span><wbr><span class="t-stroke">FOLIO</span></h1>
         <div class="hero-title-photo rev" style="transition-delay:.2s">
           <img src="https://raw.githubusercontent.com/Yota321/portfolio_2026/main/profile.jpg" alt="Golam Sayon Ahamed" class="hero-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
           <div class="photo-placeholder" style="display:none"><span class="ph-init">GSA</span></div>
