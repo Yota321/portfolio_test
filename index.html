@@ -308,7 +308,7 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
   font-family:'Bebas Neue',sans-serif;
 }
 .hero-title-photo{display:none}
-.t-line{display:inline}
+.hero-title-row{display:none}
 
 
 .hero-name{
@@ -436,7 +436,7 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
 @media(max-width:640px){
   .hero{
     min-height:auto;
-    padding:80px 20px 48px;
+    padding:72px 20px 36px;
     grid-template-columns:1fr;
     gap:0;
   }
@@ -448,30 +448,38 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
   .hero-cta{justify-content:flex-start}
   .stat{justify-content:flex-start;text-align:left}
   .pill{font-size:9px}
+  .hero-title-desktop{display:none}
+  /* hero title row: text stack left, photo right */
   .hero-title-row{
-    display:grid;
-    grid-template-columns:1fr clamp(105px,30vw,135px);
-    gap:0 10px;
-    align-items:end;
+    display:flex;
+    align-items:flex-end;
+    gap:8px;
     margin-bottom:clamp(10px,1.5vh,18px);
   }
-  .hero-title{
-    grid-column:1;
-    grid-row:1;
-    margin-bottom:0;
-    white-space:normal;
-    font-size:clamp(56px,20vw,86px);
-    line-height:.9;
+  .hero-title-stack{
+    flex:1;
+    min-width:0;
+    line-height:.88;
   }
-  .t-line{display:block}
+  .hero-title-line{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(58px,21vw,88px);
+    line-height:.9;
+    letter-spacing:.02em;
+    display:block;
+  }
+  .hero-port .t-fill{color:var(--white)}
+  .hero-folio .t-stroke{
+    -webkit-text-stroke:1.5px var(--white);
+    color:transparent;
+  }
   .hero-title-photo{
     display:block;
-    grid-column:2;
-    grid-row:1;
-    width:100%;
-    align-self:end;
+    width:clamp(100px,28vw,130px);
+    flex-shrink:0;
+    align-self:flex-end;
   }
-  .hero-title-photo img,.hero-title-photo .hero-img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 20%;border-radius:8px;display:block;filter:grayscale(15%)}
+  .hero-title-photo img,.hero-title-photo .hero-img{width:100%;aspect-ratio:2/3;object-fit:cover;object-position:center top;border-radius:8px;display:block;filter:grayscale(15%)}
   .hero-title-photo .photo-placeholder{width:100%;aspect-ratio:3/4;border-radius:8px}
 }
 
@@ -847,8 +855,12 @@ footer{
         <span class="dot"></span>Available for Internship
       </div>
       <p class="hero-eyebrow rev" style="transition-delay:.1s">Brand &amp; UI Designer</p>
+      <h1 class="hero-title hero-title-desktop rev" style="transition-delay:.15s"><span class="t-fill">PORT</span><span class="t-stroke">FOLIO</span></h1>
       <div class="hero-title-row">
-        <h1 class="hero-title rev" style="transition-delay:.15s"><span class="t-fill t-line">PORT</span><br><span class="t-stroke t-line">FOLIO</span></h1>
+        <div class="hero-title-stack">
+          <div class="hero-title-line hero-port rev" style="transition-delay:.15s"><span class="t-fill">PORT</span></div>
+          <div class="hero-title-line hero-folio rev" style="transition-delay:.18s"><span class="t-stroke">FOLIO</span></div>
+        </div>
         <div class="hero-title-photo rev" style="transition-delay:.2s">
           <img src="https://raw.githubusercontent.com/Yota321/portfolio_2026/main/profile.jpg" alt="Golam Sayon Ahamed" class="hero-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
           <div class="photo-placeholder" style="display:none"><span class="ph-init">GSA</span></div>
@@ -1218,8 +1230,7 @@ const ring = document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{
   mx=e.clientX; my=e.clientY;
-  cur.style.left=mx+
-`${mx}px`; cur.style.top=my+'px';
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
 });
 let rafId;
 function animRing(){
