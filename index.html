@@ -307,6 +307,8 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
   color:#0a0a0a;
   font-family:'Bebas Neue',sans-serif;
 }
+.hero-title-photo{display:none}
+
 
 .hero-name{
   font-family:'Cormorant Garamond',serif;
@@ -434,18 +436,22 @@ body:has(a:hover,button:hover) #cur{width:16px;height:16px}
   .hero{
     min-height:auto;
     padding:80px 20px 48px;
-    gap:24px;
+    grid-template-columns:1fr;
+    gap:0;
   }
-  .hero-right{order:1;justify-content:flex-start}
-  .photo-wrap{max-width:160px}
-  .hero-img{aspect-ratio:1/1;object-position:center 10%}
-  .photo-wrap::before,.photo-wrap::after{display:none}
+  .hero-right{display:none}
   .scroll-float{display:none}
-  .hero-left{order:2;text-align:left;max-width:100%}
+  .photo-wrap::before,.photo-wrap::after{display:none}
+  .hero-left{order:1;text-align:left;max-width:100%}
   .hero-desc{margin-left:0;margin-right:0;text-align:left}
   .hero-cta{justify-content:flex-start}
   .stat{justify-content:flex-start;text-align:left}
   .pill{font-size:9px}
+  .hero-title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:clamp(10px,1.5vh,18px)}
+  .hero-title{margin-bottom:0;flex:1;white-space:normal}
+  .hero-title-photo{width:clamp(90px,28vw,130px);flex-shrink:0;align-self:flex-end;margin-bottom:4px}
+  .hero-title-photo img,.hero-title-photo .hero-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 10%;border-radius:8px;display:block;filter:grayscale(15%)}
+  .hero-title-photo .photo-placeholder{width:100%;aspect-ratio:3/4;border-radius:8px}
 }
 
 /*──────────────────────────────────────
@@ -728,7 +734,7 @@ footer{
 
   <!-- NAV -->
   <header class="nav">
-    <a href="#" class="nav-logo">G.S. Ahamed</a>
+    <a href="#" class="nav-logo">G.S.Ahamed</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#works">Selected Work</a></li>
@@ -758,8 +764,13 @@ footer{
         <span class="dot"></span>Available for Internship
       </div>
       <p class="hero-eyebrow rev" style="transition-delay:.1s">Brand &amp; UI Designer</p>
-      <h1 class="hero-title rev" style="transition-delay:.15s">
-      <h1 class="hero-title rev" style="transition-delay:.15s"><span class="t-fill">PORT</span><span class="t-stroke">FOLIO</span></h1>
+      <div class="hero-title-row">
+        <h1 class="hero-title rev" style="transition-delay:.15s"><span class="t-fill">PORT</span><span class="t-stroke">FOLIO</span></h1>
+        <div class="hero-title-photo rev" style="transition-delay:.2s">
+          <img src="https://raw.githubusercontent.com/Yota321/portfolio_2026/main/profile.jpg" alt="Golam Sayon Ahamed" class="hero-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="photo-placeholder" style="display:none"><span class="ph-init">GSA</span></div>
+        </div>
+      </div>
       <p class="hero-name rev" style="transition-delay:.2s">Golam Sayon Ahamed</p>
       <p class="hero-desc rev" style="transition-delay:.25s">
         Brand &amp; UI Designer focused on digital systems,<br>
@@ -1124,15 +1135,16 @@ const ring = document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{
   mx=e.clientX; my=e.clientY;
-  cur.style.left=mx+'px';
-  cur.style.top=my+'px';
+  cur.style.left=mx+
+`${mx}px`; cur.style.top=my+'px';
 });
-(function loop(){
+let rafId;
+function animRing(){
   rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
-  ring.style.left=rx+'px';
-  ring.style.top=ry+'px';
-  requestAnimationFrame(loop);
-})();
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  rafId=requestAnimationFrame(animRing);
+}
+animRing();
 </script>
 </body>
 </html>
