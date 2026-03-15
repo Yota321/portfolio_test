@@ -944,29 +944,34 @@ html::-webkit-scrollbar{display:none}
 }
 .connect-hl em{color:var(--pacc);display:block;font-style:normal}
 
-/* wipe block on Connect. — static accent box, always visible, text always white */
+/* wipe block on Connect. — animates in like Works/Am but text ends white not bg */
 .connect-hl .wipe-wrap{
   display:inline-block;
   position:relative;
   padding:0 .1em;
 }
 .connect-hl .wipe-bg{
-  position:absolute; /* THIS was missing — box was collapsing */
+  position:absolute;
   inset:0 0 2px 0;
   background:var(--accent);
   border-radius:3px;
-  transform:scaleX(1) !important;
-  transition:none !important;
+  transform:scaleX(0);         /* starts hidden */
+  transform-origin:left;
+  transition:transform .55s cubic-bezier(.77,0,.18,1);
   z-index:0;
 }
+.connect-hl .wipe-wrap.wiped .wipe-bg{
+  transform:scaleX(1);         /* wipes in */
+}
 .connect-hl .wipe-text{
-  position:relative; /* THIS was missing — text was under the box */
+  position:relative;
   z-index:1;
-  color:#fff;
+  color:var(--ptxt);            /* starts same muted colour as "Let's" */
   font-style:normal;
+  transition:color .12s ease .3s; /* flips after box passes */
 }
 .connect-hl .wipe-wrap.wiped .wipe-text{
-  color:#fff;
+  color:var(--panel);           /* flips to panel bg — text reads as cut-out inside accent box */
 }
 .connect-sub{margin-top:clamp(22px,3.5vh,36px);max-width:400px;font-size:clamp(12.5px,1.3vw,14px);font-weight:300;line-height:1.9;color:var(--pdim)}
 .c-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--pbdr);border:1px solid var(--pbdr);border-radius:12px;overflow:hidden;margin-top:clamp(36px,5.5vh,64px)}
@@ -1727,21 +1732,15 @@ window.addEventListener('scroll',()=>{
   function checkAll(){
     document.querySelectorAll('.wipe-wrap:not(.wiped)').forEach(wrap => {
       const rect = wrap.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight * 0.88 && rect.bottom > 0;
-      if(inView){
-        // delay so parent rv fade has started
-        setTimeout(() => fireWipe(wrap), 420);
+      if(rect.top < window.innerHeight * 0.88 && rect.bottom > 0){
+        setTimeout(() => fireWipe(wrap), 400);
       }
     });
   }
 
-  // Check on scroll
   window.addEventListener('scroll', checkAll, {passive:true});
-  // Check on load and after short delay (catches elements already in view)
-  window.addEventListener('load', () => { checkAll(); setTimeout(checkAll, 800); });
-  // Also check immediately after DOM ready
-  setTimeout(checkAll, 300);
-  setTimeout(checkAll, 1200);
+  window.addEventListener('load', () => { setTimeout(checkAll, 300); setTimeout(checkAll, 900); });
+  setTimeout(checkAll, 500);
 })();
 </script>
 </body>
