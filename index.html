@@ -1040,12 +1040,21 @@ html::-webkit-scrollbar{display:none}
   .wi-row.solo .wi-title{font-size:clamp(28px,8vw,48px)}
 }
 
-/* contain for specific projects whose images get cropped */
-.wi-row.solo .wi-media,           /* 01 Run Your Story — solo row */
-.wi-row.pair:last-child .wi:last-child .wi-media { /* 05 Other Work — last in last pair */
-  object-fit:contain;
-  object-position:center;
-  background:var(--surface); /* fills letterbox gaps with surface colour */
+/* 01 Run Your Story + 05 Other Work — full image visible, height auto-fits */
+.wi-row.solo .wi-img-wrap,
+.wi-row.pair:last-child .wi:last-child .wi-img-wrap{
+  aspect-ratio:unset;    /* remove fixed ratio so height follows image */
+  height:auto;
+}
+.wi-row.solo .wi-media,
+.wi-row.pair:last-child .wi:last-child .wi-media{
+  position:relative;     /* back to normal flow so image sets the height */
+  inset:auto;
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:unset;
+  transform:none !important; /* disable hover scale — would cause layout shift */
 }
 .connect{background:var(--panel);transition:background .5s;overflow:visible}
 .connect .sec-tag{color:var(--pacc)}
