@@ -206,33 +206,106 @@
   --pbdr:    rgba(232,82,10,.15);
 }
 
-/* ══ PAPER + SAND TEXTURES ══
-   SVG noise grain overlay on body — only in paper/sand themes.
-   Uses a finer grain for paper, coarser for sand.
-══ */
-[data-theme="paper"] body::before,
-[data-theme="sand"]  body::before{
+/* ══ PAPER TEXTURE — fibrous, warm, directional ══ */
+[data-theme="paper"] body::before{
   content:'';
   position:fixed;inset:0;
   pointer-events:none;
-  z-index:9995;
-  opacity:.045;
-  /* grain via SVG feTurbulence */
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)' opacity='1'/%3E%3C/svg%3E");
-  background-repeat:repeat;
-  background-size:260px 260px;
+  z-index:9994;
+  /* Layer 1: fine horizontal fiber lines */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(26,10,46,.018) 3px,
+      rgba(26,10,46,.018) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      rgba(26,10,46,.008) 8px,
+      rgba(26,10,46,.008) 9px
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9 0.3' numOctaves='5' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)' opacity='.55'/%3E%3C/svg%3E");
+  background-repeat:repeat,repeat,repeat;
+  background-size:auto,auto,340px 340px;
+  opacity:.7;
+  mix-blend-mode:multiply;
 }
-[data-theme="sand"] body::before{
-  opacity:.06;
-  background-size:200px 200px; /* coarser for sand */
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)' opacity='1'/%3E%3C/svg%3E");
+/* edge vignette + worn corners for paper */
+[data-theme="paper"] body::after{
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 0% 0%, rgba(26,10,46,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 0%, rgba(26,10,46,.04) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(26,10,46,.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, rgba(26,10,46,.05) 0%, transparent 45%),
+    radial-gradient(ellipse at center, transparent 45%, rgba(26,10,46,.05) 100%);
 }
 
-/* subtle vignette for paper theme for more depth */
-[data-theme="paper"] body::after{
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse at center, transparent 50%, rgba(26,10,46,.08) 100%);
+/* ══ SAND TEXTURE — coarse grit, warm grain ══ */
+[data-theme="sand"] body::before{
+  content:'';
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:9994;
+  /* Layer: coarse sandy grain with slight directionality */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.65 0.45' numOctaves='3' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.9'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='h'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='14' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23h)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat:repeat,repeat;
+  background-size:220px 220px, 140px 140px;
+  opacity:.07;
+  mix-blend-mode:multiply;
 }
+[data-theme="sand"] body::after{
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at center, transparent 40%, rgba(45,26,14,.07) 100%);
+}
+
+/* ══ HEADLINE PILL — flipped bg/text (Variant 1) ══ */
+.h-pill{
+  display:inline-block;
+  background:var(--text);
+  color:var(--bg);
+  padding:.04em .22em;
+  border-radius:4px;
+  font-style:italic;
+  line-height:inherit;
+  /* ensure it inherits the headline font size exactly */
+  font-size:inherit;
+  font-family:inherit;
+  font-weight:inherit;
+  letter-spacing:inherit;
+  transition:background .5s,color .5s;
+}
+
+/* ══ SCROLL-WIPE em — section headers (Variant 3) ══ */
+.sec-h .wipe-wrap{
+  display:inline-block;
+  position:relative;
+}
+.sec-h .wipe-bg{
+  position:absolute;
+  inset:0 0 2px 0; /* slight bottom offset so descenders clear */
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:left;
+  border-radius:2px;
+  transition:transform .55s cubic-bezier(.77,0,.18,1);
+}
+.sec-h .wipe-wrap.wiped .wipe-bg{transform:scaleX(1)}
+.sec-h .wipe-text{
+  position:relative;
+  z-index:1;
+  color:var(--accent);
+  font-style:normal;
+  transition:color .12s ease .28s,color .5s; /* colour flips after wipe passes */
+}
+.sec-h .wipe-wrap.wiped .wipe-text{color:var(--bg)}
 
 /* ══ RESET ══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -626,6 +699,7 @@ html::-webkit-scrollbar{display:none}
 /* ══ SECTION SHARED ══ */
 .sec-tag{display:block;font-size:clamp(8.5px,.9vw,10px);letter-spacing:.36em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:clamp(10px,1.8vh,18px);transition:color .5s}
 .sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7.5vw,106px);line-height:.88;letter-spacing:.03em;color:var(--text);transition:color .5s}
+/* legacy em fallback — overridden by .wipe-text when wipe-wrap is used */
 .sec-h em{color:var(--accent);font-style:normal;transition:color .5s}
 .swp{padding:clamp(72px,10vh,130px) clamp(24px,6vw,80px)}
 
@@ -854,6 +928,11 @@ html::-webkit-scrollbar{display:none}
 .connect .sec-tag{color:var(--pacc)}
 .connect-hl{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,10.5vw,144px);line-height:.88;letter-spacing:.02em;color:var(--ptxt)}
 .connect-hl em{color:var(--pacc);display:block;font-style:normal}
+/* wipe-wrap inside connect-hl */
+.connect-hl .wipe-wrap{display:block}
+.connect-hl .wipe-bg{background:var(--pacc)}
+.connect-hl .wipe-text{color:var(--pacc)}
+.connect-hl .wipe-wrap.wiped .wipe-text{color:var(--panel)}
 .connect-sub{margin-top:clamp(14px,2.5vh,22px);max-width:400px;font-size:clamp(12.5px,1.3vw,14px);font-weight:300;line-height:1.9;color:var(--pdim)}
 .c-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--pbdr);border:1px solid var(--pbdr);border-radius:12px;overflow:hidden;margin-top:clamp(36px,5.5vh,64px)}
 @media(max-width:640px){.c-grid{grid-template-columns:1fr 1fr}.c-card:last-child:nth-child(odd){grid-column:1/-1}}
@@ -989,19 +1068,19 @@ footer{padding:clamp(18px,3vh,26px) clamp(24px,6vw,80px);background:var(--bg);bo
     <div class="hero-msg" data-msg="recruiter">
       <div class="pill rv"><span class="dot"></span>Open to Internships Aug–Sept 2026</div>
       <p class="hero-eyebrow rv">Hey, Recruiter</p>
-      <h1 class="hero-title rv" style="font-size:clamp(52px,9vw,122px)">I Build<br>Systems<br><span class="t-stroke" style="-webkit-text-stroke:1.5px var(--text)">Not Decks</span></h1>
+      <h1 class="hero-title rv" style="font-size:clamp(52px,9vw,122px)">I Build<br><span class="h-pill">Systems</span><br>Not Decks</h1>
     </div>
 
     <div class="hero-msg" data-msg="studio">
       <div class="pill rv"><span class="dot"></span>3rd Year BVA, Bangalore</div>
       <p class="hero-eyebrow rv">Hey, Studio</p>
-      <h1 class="hero-title rv" style="font-size:clamp(52px,9vw,122px)">Think Big<br><span class="t-stroke" style="-webkit-text-stroke:1.5px var(--text)">Ship</span><br>Clean</h1>
+      <h1 class="hero-title rv" style="font-size:clamp(52px,9vw,122px)">Think <span class="h-pill">Big</span><br>Ship Clean</h1>
     </div>
 
     <div class="hero-msg" data-msg="collab">
       <div class="pill rv"><span class="dot"></span>Always experimenting</div>
       <p class="hero-eyebrow rv">Hey, Collaborator</p>
-      <h1 class="hero-title rv" style="font-size:clamp(52px,9vw,122px)">Let's Make<br>Something<br><span class="t-stroke" style="-webkit-text-stroke:1.5px var(--text)">Weird</span></h1>
+      <h1 class="hero-title rv" style="font-size:clamp(52px,9vw,122px)">Let's Make<br>Something <span class="h-pill">Weird</span></h1>
     </div>
 
     <div class="hero-card rv" style="transition-delay:.22s">
@@ -1071,7 +1150,7 @@ footer{padding:clamp(18px,3vh,26px) clamp(24px,6vw,80px);background:var(--bg);bo
 
     <div style="margin-bottom:clamp(36px,5.5vh,64px)">
       <span class="sec-tag rv">01 — About</span>
-      <h2 class="sec-h rv" style="transition-delay:.07s">Who I <em>Am</em></h2>
+      <h2 class="sec-h rv" style="transition-delay:.07s">Who I <span class="wipe-wrap"><span class="wipe-bg"></span><span class="wipe-text">Am</span></span></h2>
     </div>
 
     <p class="about-statement rv" style="transition-delay:.12s">
@@ -1143,7 +1222,7 @@ footer{padding:clamp(18px,3vh,26px) clamp(24px,6vw,80px);background:var(--bg);bo
   <div class="works-top">
     <div>
       <span class="sec-tag rv">02 — Work</span>
-      <h2 class="sec-h rv" style="transition-delay:.08s">Selected<br><em>Works</em></h2>
+      <h2 class="sec-h rv" style="transition-delay:.08s">Selected<br><span class="wipe-wrap"><span class="wipe-bg"></span><span class="wipe-text">Works</span></span></h2>
     </div>
     <p class="works-sub rv" style="transition-delay:.12s">Five projects. Hover to explore.</p>
   </div>
@@ -1280,7 +1359,7 @@ footer{padding:clamp(18px,3vh,26px) clamp(24px,6vw,80px);background:var(--bg);bo
 <!-- CONNECT -->
 <section class="connect swp" id="connect">
   <span class="sec-tag rv">03 — Contact</span>
-  <h2 class="connect-hl rv" style="transition-delay:.08s">Let's<em>Connect.</em></h2>
+  <h2 class="connect-hl rv" style="transition-delay:.08s">Let's<span class="wipe-wrap"><span class="wipe-bg"></span><span class="wipe-text">Connect.</span></span></h2>
   <p class="connect-sub rv" style="transition-delay:.14s">Recruiter, studio, or just someone with an interesting idea. I want to hear about it.</p>
   <div class="c-grid">
     <a href="https://mail.google.com/mail/?view=cm&to=sayanahamed06@gmail.com" target="_blank" rel="noopener" class="c-card rv">
@@ -1602,6 +1681,20 @@ window.addEventListener('scroll',()=>{
   document.addEventListener('mouseout',e=>{if(e.target.closest('a,button,[role="button"],.hero-name')) document.body.classList.remove('cur-h');});
   document.addEventListener('mouseleave',()=>{cur.style.opacity='0';ring.style.opacity='0';});
   document.addEventListener('mouseenter',()=>{cur.style.opacity='1';ring.style.opacity='1';});
+})();
+
+/* ── SCROLL WIPE — section headings ── */
+(function(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        // stagger slightly so it fires after the parent rv animation
+        setTimeout(() => e.target.classList.add('wiped'), 120);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.55 });
+  document.querySelectorAll('.wipe-wrap').forEach(el => io.observe(el));
 })();
 </script>
 </body>
