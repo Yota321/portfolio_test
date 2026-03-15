@@ -944,23 +944,29 @@ html::-webkit-scrollbar{display:none}
 }
 .connect-hl em{color:var(--pacc);display:block;font-style:normal}
 
-/* wipe block on Connect. — accent bg sweeps in, text stays white throughout */
+/* wipe block on Connect. — static accent box, always visible, text always white */
 .connect-hl .wipe-wrap{
   display:inline-block;
   position:relative;
-  padding:0 .08em;
+  padding:0 .1em;
 }
 .connect-hl .wipe-bg{
-  background:var(--pacc);
+  position:absolute; /* THIS was missing — box was collapsing */
+  inset:0 0 2px 0;
+  background:var(--accent);
   border-radius:3px;
-  inset:0.02em 0 0.04em 0;
+  transform:scaleX(1) !important;
+  transition:none !important;
+  z-index:0;
 }
 .connect-hl .wipe-text{
-  color:#fff; /* white from the start — no flip, ever */
+  position:relative; /* THIS was missing — text was under the box */
+  z-index:1;
+  color:#fff;
   font-style:normal;
 }
 .connect-hl .wipe-wrap.wiped .wipe-text{
-  color:#fff; /* stays white after wipe too */
+  color:#fff;
 }
 .connect-sub{margin-top:clamp(22px,3.5vh,36px);max-width:400px;font-size:clamp(12.5px,1.3vw,14px);font-weight:300;line-height:1.9;color:var(--pdim)}
 .c-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--pbdr);border:1px solid var(--pbdr);border-radius:12px;overflow:hidden;margin-top:clamp(36px,5.5vh,64px)}
@@ -1714,40 +1720,28 @@ window.addEventListener('scroll',()=>{
 
 /* ── SCROLL WIPE — section headings ── */
 (function(){
-  function doWipe(el){
-    el.classList.add('wiped');
+  function fireWipe(wrap){
+    if(!wrap.classList.contains('wiped')) wrap.classList.add('wiped');
   }
 
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        // Delay 500ms so parent .rv fade-in (900ms transition) has started
-        // but the heading is already visible enough to see the wipe
-        setTimeout(() => doWipe(e.target), 480);
-        io.unobserve(e.target);
+  function checkAll(){
+    document.querySelectorAll('.wipe-wrap:not(.wiped)').forEach(wrap => {
+      const rect = wrap.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.88 && rect.bottom > 0;
+      if(inView){
+        // delay so parent rv fade has started
+        setTimeout(() => fireWipe(wrap), 420);
       }
     });
-  }, {
-    threshold: 0.05,
-    rootMargin: '0px 0px -40px 0px'
-  });
+  }
 
-  // Also hook into the rv reveal — when a .sec-h or .connect-hl gets .in,
-  // fire any .wipe-wrap children shortly after
-  const rvIo = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const wraps = e.target.querySelectorAll('.wipe-wrap');
-        if (wraps.length) {
-          setTimeout(() => wraps.forEach(w => doWipe(w)), 600);
-        }
-        rvIo.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.05 });
-
-  document.querySelectorAll('.wipe-wrap').forEach(el => io.observe(el));
-  document.querySelectorAll('.sec-h, .connect-hl').forEach(el => rvIo.observe(el));
+  // Check on scroll
+  window.addEventListener('scroll', checkAll, {passive:true});
+  // Check on load and after short delay (catches elements already in view)
+  window.addEventListener('load', () => { checkAll(); setTimeout(checkAll, 800); });
+  // Also check immediately after DOM ready
+  setTimeout(checkAll, 300);
+  setTimeout(checkAll, 1200);
 })();
 </script>
 </body>
