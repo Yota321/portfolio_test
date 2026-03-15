@@ -43,6 +43,8 @@
   --pacc:    var(--accent);
   --pdim:    rgba(237,233,224,.36);
   --pbdr:    rgba(255,255,255,.06);
+  --glass-panel:  rgba(255,255,255,.04);
+  --glass2-panel: rgba(255,255,255,.08);
 }
 
 /* ══ THEME 1: LIGHT — warm cream + forest green panels ══ */
@@ -62,10 +64,12 @@
   --bg-rgb:  245,240,227;
   --gold:    #6b4e16;
   --panel:   #1d2d1a;
-  --ptxt:    rgba(245,240,227,.82);
+  --ptxt:    #e8f0e5;
   --pacc:    #e8960a;
-  --pdim:    rgba(245,240,227,.42);
-  --pbdr:    rgba(255,255,255,.07);
+  --pdim:    rgba(232,240,229,.72);
+  --pbdr:    rgba(255,255,255,.10);
+  --glass-panel:  rgba(255,255,255,.08);
+  --glass2-panel: rgba(255,255,255,.14);
 }
 
 /* ══ THEME 2: MIDNIGHT — deep navy blue + electric cyan ══ */
@@ -110,8 +114,10 @@
   --panel:   #1a0a2e;
   --ptxt:    #ede8f8;
   --pacc:    #a855f7;
-  --pdim:    rgba(237,232,248,.68);
-  --pbdr:    rgba(168,85,247,.18);
+  --pdim:    rgba(237,232,248,.72);
+  --pbdr:    rgba(168,85,247,.20);
+  --glass-panel:  rgba(255,255,255,.07);
+  --glass2-panel: rgba(255,255,255,.13);
 }
 
 /* ══ THEME 4: FOREST — deep charcoal + sage green ══ */
@@ -200,10 +206,12 @@
   --bg-rgb:  247,240,230;
   --gold:    #c0622a;
   --panel:   #2d1a0e;
-  --ptxt:    rgba(247,240,230,.92);
+  --ptxt:    #f5e8d8;
   --pacc:    #e8520a;
-  --pdim:    rgba(247,240,230,.65);
-  --pbdr:    rgba(232,82,10,.15);
+  --pdim:    rgba(245,232,216,.72);
+  --pbdr:    rgba(232,82,10,.18);
+  --glass-panel:  rgba(255,255,255,.07);
+  --glass2-panel: rgba(255,255,255,.13);
 }
 
 /* ══ PAPER TEXTURE — fibrous, warm, directional ══ */
@@ -924,21 +932,42 @@ html::-webkit-scrollbar{display:none}
 }
 
 /* ══ CONNECT ══ */
-.connect{background:var(--panel);transition:background .5s}
+.connect{background:var(--panel);transition:background .5s;overflow:visible}
 .connect .sec-tag{color:var(--pacc)}
-.connect-hl{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,10.5vw,144px);line-height:.88;letter-spacing:.02em;color:var(--ptxt)}
+.connect-hl{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(58px,10.5vw,144px);
+  line-height:.92;
+  letter-spacing:.02em;
+  color:var(--ptxt);
+  overflow:visible; /* never clip the wipe block */
+}
 .connect-hl em{color:var(--pacc);display:block;font-style:normal}
-/* wipe-wrap inside connect-hl */
-.connect-hl .wipe-wrap{display:block}
-.connect-hl .wipe-bg{background:var(--pacc)}
-.connect-hl .wipe-text{color:var(--pacc)}
-.connect-hl .wipe-wrap.wiped .wipe-text{color:var(--panel)}
-.connect-sub{margin-top:clamp(14px,2.5vh,22px);max-width:400px;font-size:clamp(12.5px,1.3vw,14px);font-weight:300;line-height:1.9;color:var(--pdim)}
+
+/* wipe block on Connect. — accent bg sweeps in, text stays white throughout */
+.connect-hl .wipe-wrap{
+  display:inline-block;
+  position:relative;
+  padding:0 .08em;
+}
+.connect-hl .wipe-bg{
+  background:var(--pacc);
+  border-radius:3px;
+  inset:0.02em 0 0.04em 0;
+}
+.connect-hl .wipe-text{
+  color:#fff; /* white from the start — no flip, ever */
+  font-style:normal;
+}
+.connect-hl .wipe-wrap.wiped .wipe-text{
+  color:#fff; /* stays white after wipe too */
+}
+.connect-sub{margin-top:clamp(22px,3.5vh,36px);max-width:400px;font-size:clamp(12.5px,1.3vw,14px);font-weight:300;line-height:1.9;color:var(--pdim)}
 .c-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--pbdr);border:1px solid var(--pbdr);border-radius:12px;overflow:hidden;margin-top:clamp(36px,5.5vh,64px)}
 @media(max-width:640px){.c-grid{grid-template-columns:1fr 1fr}.c-card:last-child:nth-child(odd){grid-column:1/-1}}
-.c-card{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:clamp(18px,2.8vh,28px) clamp(14px,2vw,22px);text-decoration:none;display:flex;flex-direction:column;gap:clamp(10px,1.6vh,14px);position:relative;overflow:hidden;transition:background .25s}
+.c-card{background:var(--glass-panel,var(--glass));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:clamp(18px,2.8vh,28px) clamp(14px,2vw,22px);text-decoration:none;display:flex;flex-direction:column;gap:clamp(10px,1.6vh,14px);position:relative;overflow:hidden;transition:background .25s}
 .c-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:var(--pacc);transform:scaleX(0);transform-origin:left;transition:transform .35s}
-.c-card:hover{background:var(--glass2)}
+.c-card:hover{background:var(--glass2-panel,var(--glass2))}
 .c-card:hover::after{transform:scaleX(1)}
 .c-top{display:flex;align-items:flex-start;justify-content:space-between}
 .c-icon{width:34px;height:34px;border:1px solid var(--pbdr);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--pdim);transition:border-color .25s,color .25s}
@@ -1359,7 +1388,7 @@ footer{padding:clamp(18px,3vh,26px) clamp(24px,6vw,80px);background:var(--bg);bo
 <!-- CONNECT -->
 <section class="connect swp" id="connect">
   <span class="sec-tag rv">03 — Contact</span>
-  <h2 class="connect-hl rv" style="transition-delay:.08s">Let's<span class="wipe-wrap"><span class="wipe-bg"></span><span class="wipe-text">Connect.</span></span></h2>
+  <h2 class="connect-hl rv" style="transition-delay:.08s">Let's<br><span class="wipe-wrap"><span class="wipe-bg"></span><span class="wipe-text">Connect.</span></span></h2>
   <p class="connect-sub rv" style="transition-delay:.14s">Recruiter, studio, or just someone with an interesting idea. I want to hear about it.</p>
   <div class="c-grid">
     <a href="https://mail.google.com/mail/?view=cm&to=sayanahamed06@gmail.com" target="_blank" rel="noopener" class="c-card rv">
@@ -1685,16 +1714,40 @@ window.addEventListener('scroll',()=>{
 
 /* ── SCROLL WIPE — section headings ── */
 (function(){
+  function doWipe(el){
+    el.classList.add('wiped');
+  }
+
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        // stagger slightly so it fires after the parent rv animation
-        setTimeout(() => e.target.classList.add('wiped'), 120);
+        // Delay 500ms so parent .rv fade-in (900ms transition) has started
+        // but the heading is already visible enough to see the wipe
+        setTimeout(() => doWipe(e.target), 480);
         io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.55 });
+  }, {
+    threshold: 0.05,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  // Also hook into the rv reveal — when a .sec-h or .connect-hl gets .in,
+  // fire any .wipe-wrap children shortly after
+  const rvIo = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const wraps = e.target.querySelectorAll('.wipe-wrap');
+        if (wraps.length) {
+          setTimeout(() => wraps.forEach(w => doWipe(w)), 600);
+        }
+        rvIo.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
   document.querySelectorAll('.wipe-wrap').forEach(el => io.observe(el));
+  document.querySelectorAll('.sec-h, .connect-hl').forEach(el => rvIo.observe(el));
 })();
 </script>
 </body>
