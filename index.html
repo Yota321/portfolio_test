@@ -465,7 +465,8 @@ body.cur-h #cur-ring{width:16px;height:16px;border-color:transparent}
 
 /* ══ NAV ══ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:clamp(12px,2vh,18px) clamp(20px,5.5vw,64px);background:var(--glass);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid var(--border);transition:background .5s,border-color .5s}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,1.6vw,17px);letter-spacing:.2em;color:var(--text);text-decoration:none;transition:opacity .2s;position:relative}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,1.6vw,17px);letter-spacing:.2em;color:var(--text);text-decoration:none;transition:opacity .5s;position:relative;opacity:0}
+.nav-logo.visible{opacity:1}
 .nav-logo:hover{opacity:.7}
 .nav-links{display:flex;gap:clamp(18px,3vw,40px);list-style:none}
 .nav-links a{font-size:clamp(9px,1vw,11px);font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);text-decoration:none;position:relative;transition:color .2s}
@@ -1039,7 +1040,13 @@ html::-webkit-scrollbar{display:none}
   .wi-row.solo .wi-title{font-size:clamp(28px,8vw,48px)}
 }
 
-/* ══ CONNECT ══ */
+/* contain for specific projects whose images get cropped */
+.wi-row.solo .wi-media,           /* 01 Run Your Story — solo row */
+.wi-row.pair:last-child .wi:last-child .wi-media { /* 05 Other Work — last in last pair */
+  object-fit:contain;
+  object-position:center;
+  background:var(--surface); /* fills letterbox gaps with surface colour */
+}
 .connect{background:var(--panel);transition:background .5s;overflow:visible}
 .connect .sec-tag{color:var(--pacc)}
 .connect-hl{
@@ -1732,6 +1739,11 @@ setAccent(curH);
       clearInterval(tick);fill.style.clipPath='inset(0 0% 0 0)';bar.style.right='0%';pct.textContent='100%';
       setTimeout(()=>{
         loader.classList.add('out');site.classList.add('visible');
+        // fade nav logo into its corner position after loader slides away
+        setTimeout(()=>{
+          const logo=document.getElementById('nav-logo-btn');
+          if(logo) logo.classList.add('visible');
+        },400);
         setTimeout(()=>{
           const curtain=document.getElementById('hero-curtain');
           const img=document.getElementById('hero-atmos-img');
